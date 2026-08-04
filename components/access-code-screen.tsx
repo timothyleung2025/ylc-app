@@ -1,9 +1,51 @@
 "use client";
+
 import { motion } from "framer-motion";
-import { ArrowRight, Compass, KeyRound, Leaf } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { useParticipant } from "./participant-session";
 import { Button, Field } from "./ui";
-export function AccessCodeScreen(){const router=useRouter();const {signIn}=useParticipant();const [code,setCode]=useState("");const [error,setError]=useState("");function submit(e:FormEvent){e.preventDefault();if(!signIn(code)){setError("We couldn’t find that code. Check it and try again, or ask a conference organizer for help.");return}setError("");router.replace("/home")}
-return <main className="paper-texture relative grid min-h-dvh overflow-hidden md:grid-cols-2"><section className="relative hidden overflow-hidden bg-[var(--forest)] p-14 text-white md:flex md:flex-col md:justify-between"><div className="absolute -right-24 -top-20 size-96 rounded-full bg-[var(--strong-cyan)]/20 blur-2xl"/><div className="flex items-center gap-3 text-sm font-bold tracking-wide"><span className="grid size-10 place-items-center rounded-2xl bg-white/10"><Leaf/></span>ASIAN LIVER CENTER · STANFORD</div><div className="relative"><p className="mb-4 text-sm font-bold uppercase tracking-[.22em] text-[#8fe0dc]">Youth Leadership Conference 2026</p><h1 className="font-display max-w-xl text-7xl leading-[.96]">Your field guide awaits.</h1><p className="mt-7 max-w-md text-lg leading-relaxed text-white/70">Enter your personal access code to find your team, schedule, and conference resources.</p></div><div className="flex gap-3 text-sm text-white/65"><span>Explore.</span><span>Connect.</span><span>Make an impact.</span></div></section><section className="relative flex min-h-dvh items-center justify-center px-5 py-10"><div className="absolute left-5 top-5 flex items-center gap-2 font-bold text-[var(--forest)] md:hidden"><span className="grid size-9 place-items-center rounded-xl bg-[var(--forest)] text-white"><Compass size={19}/></span>YLC FIELD GUIDE</div><div className="absolute right-5 top-20 rotate-6 rounded-lg border-2 border-[var(--red)] px-3 py-1 text-[10px] font-black uppercase tracking-widest text-[var(--dark-cyan)] opacity-70 md:right-12 md:top-12">YLC · 2026</div><motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} className="w-full max-w-md"><div className="mb-8 md:hidden"><div className="mb-5 inline-grid size-16 place-items-center rounded-[22px] bg-[var(--forest)] text-white shadow-xl"><Compass size={32}/></div><h1 className="font-display text-5xl leading-none text-[var(--forest)]">YLC Field<br/>Guide</h1></div><span className="mb-5 grid size-12 place-items-center rounded-2xl bg-[var(--strong-cyan)]/20 text-[var(--dark-cyan)]"><KeyRound size={23}/></span><p className="text-sm font-extrabold uppercase tracking-[.16em] text-[var(--dark-cyan)]">Welcome, leader</p><h2 className="mt-2 font-display text-4xl text-[var(--forest)]">Enter your access code</h2><p className="mt-3 text-[var(--muted)]">Use the personal code provided by the YLC team. No account or password is needed.</p><form onSubmit={submit} className="mt-8 space-y-5"><Field label="Access code" value={code} onChange={e=>{setCode(e.target.value);if(error)setError("")}} placeholder="Enter your code" autoCapitalize="none" autoCorrect="off" spellCheck={false} autoFocus aria-invalid={!!error} aria-describedby={error?"access-code-error":undefined}/>{error&&<motion.p id="access-code-error" role="alert" initial={{opacity:0,y:-4}} animate={{opacity:1,y:0}} className="rounded-2xl border border-[#c9423b]/20 bg-[#fae2df] p-3 text-sm font-semibold text-[#8f302b]">{error}</motion.p>}<Button className="flex w-full items-center justify-center gap-2" type="submit">Enter field guide <ArrowRight size={18}/></Button></form></motion.div></section></main>}
+
+export function AccessCodeScreen() {
+  const router = useRouter();
+  const { signIn } = useParticipant();
+  const [code, setCode] = useState("");
+  const [error, setError] = useState("");
+
+  function submit(event: FormEvent) {
+    event.preventDefault();
+    if (!signIn(code)) {
+      setError("We couldn’t find that code. Check it and try again, or ask a conference organizer for help.");
+      return;
+    }
+    setError("");
+    router.replace("/home");
+  }
+
+  return <main className="paper-texture relative grid min-h-dvh overflow-hidden md:grid-cols-2">
+    <section className="relative hidden overflow-hidden bg-[var(--forest)] p-14 text-white md:flex md:flex-col md:justify-between">
+      <div className="absolute -right-24 -top-20 size-96 rounded-full bg-[var(--strong-cyan)]/20 blur-2xl" />
+      <p className="text-sm font-bold tracking-wide">ASIAN LIVER CENTER · STANFORD</p>
+      <div className="relative">
+        <p className="mb-4 text-sm font-bold uppercase tracking-[.22em] text-[#8fe0dc]">Youth Leadership Conference 2026</p>
+        <h1 className="font-display max-w-xl text-7xl leading-[.96]">YLC 2026</h1>
+        <p className="mt-7 max-w-md text-lg leading-relaxed text-white/70">Your pocket guide to the conference, your team, and the challenge.</p>
+      </div>
+      <div className="flex gap-3 text-sm text-white/65"><span>Explore.</span><span>Connect.</span><span>Make an impact.</span></div>
+    </section>
+
+    <section className="relative flex min-h-dvh items-center justify-center px-5 py-10">
+      <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
+        <div className="mb-8 md:hidden"><h1 className="font-display text-6xl leading-none text-[var(--forest)]">YLC 2026</h1></div>
+        <p className="text-sm font-extrabold uppercase tracking-[.16em] text-[var(--dark-cyan)]">Welcome, leader!</p>
+        <h2 className="mt-2 whitespace-nowrap font-display text-2xl text-[var(--forest)] sm:text-3xl">Enter your access code</h2>
+        <p className="mt-3 text-[var(--muted)]">Use your personal code: the first 3 letters of your first name + the first 2 letters of your last name.</p>
+        <form onSubmit={submit} className="mt-8 space-y-5">
+          <Field label="Access code" value={code} onChange={(event) => { setCode(event.target.value); if (error) setError(""); }} placeholder="Enter your code" autoCapitalize="none" autoCorrect="off" spellCheck={false} autoFocus aria-invalid={!!error} aria-describedby={error ? "access-code-error" : undefined} />
+          {error && <motion.p id="access-code-error" role="alert" initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl border border-[#c9423b]/20 bg-[#fae2df] p-3 text-sm font-semibold text-[#8f302b]">{error}</motion.p>}
+          <Button className="flex w-full items-center justify-center" type="submit">Enter your pocket guide!</Button>
+        </form>
+      </motion.div>
+    </section>
+  </main>;
+}

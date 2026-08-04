@@ -1,13 +1,169 @@
-import { CalendarClock, Check, Clapperboard, Lightbulb, Mail, Presentation, Sparkles, Target, Users } from "lucide-react";
+import {
+  CalendarClock,
+  Check,
+  Clapperboard,
+  Mail,
+  Presentation,
+  Sparkles,
+  Target,
+  Users,
+} from "lucide-react";
 import { PageHeader, Pill } from "@/components/ui";
+import { DeadlineCountdown } from "@/components/deadline-countdown";
 
-const sections=["Initiative Title","Purpose","Projected Outcomes","Budget","Point of Contact","Goals & Objectives","Methods","Timeline of Execution"];
-const videos=[
- ["Outreach","Community call-to-action, street interview, tabling, library/community partner, etc."],
- ["Informational","Explain hepatitis B in an engaging way."],
- ["Trendy","Use a relevant trend for your target audience."],
+const sections = [
+  "Initiative Title",
+  "Purpose",
+  "Projected Outcomes",
+  "Budget",
+  "Point of Contact",
+  "Goals & Objectives",
+  "Methods",
+  "Timeline of Execution",
 ];
-const requirements=["Use or connect to the JoinJade brand.","Include one external partner.","Give each team member an active role.","Include quantitative goals.","Explain the target audience and disparities."];
-const scoring=["Creativity & Originality","Feasibility & Viability","Speaking Performance","Overall Quality"];
+const videos = [
+  [
+    "Outreach",
+    "Community call-to-action, street interview, tabling, library/community partner, etc.",
+  ],
+  ["Informational", "Explain hepatitis B in an engaging way."],
+  ["Trendy", "Use a relevant trend for your target audience."],
+];
+const requirements = [
+  "Use or connect to the JoinJade brand.",
+  "Include one external partner.",
+  "Give each team member an active role.",
+  "Include quantitative goals.",
+  "Explain the target audience and disparities.",
+];
+const scoring = [
+  "Creativity & Originality",
+  "Feasibility & Viability",
+  "Speaking Performance",
+  "Overall Quality",
+];
 
-export default function Challenge(){return <div className="mx-auto max-w-3xl"><PageHeader eyebrow="YLC 2026 Team Challenge" title="Breaking the Algorithm" action={<span className="grid size-12 place-items-center rounded-2xl bg-[#fff0c8] text-[#a56a21]"><Lightbulb/></span>}/><section className="relative overflow-hidden rounded-[30px] bg-[var(--charcoal-blue)] p-6 text-white shadow-xl md:p-8"><div className="absolute -right-10 -top-10 size-40 rounded-full bg-[#f0a34a]/20"/><Sparkles className="text-[#f0a34a]"/><p className="mt-7 text-lg font-bold leading-relaxed">Your team will create a public health outreach plan that uses short-form social media to increase hepatitis B testing, screening, vaccination, and awareness.</p></section><section className="card mt-5 p-5"><h2 className="flex items-center gap-2 font-display text-2xl text-[var(--charcoal-blue)]"><Target className="text-[var(--dark-cyan)]"/>Your prompt</h2><p className="mt-3 leading-relaxed text-[var(--muted)]">You are a social media influencer focused on AAPI health and culture. Your goal is to connect with your audience, spread awareness about hepatitis B screening and vaccination, and create a realistic outreach plan that ALC could potentially put into action.</p></section><section className="card mt-4 flex gap-4 p-5"><Presentation className="shrink-0 text-[var(--dark-cyan)]"/><div><h2 className="font-bold">Final presentation</h2><p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">Each team will present an 8–10 minute slideshow to the ALC panel during the closing ceremony on Day 4.</p></div></section><section className="mt-7"><h2 className="mb-3 font-display text-2xl text-[var(--charcoal-blue)]">Required project sections</h2><div className="grid grid-cols-2 gap-2">{sections.map((item,index)=><div key={item} className="card flex items-center gap-2 p-3 text-sm font-bold"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--strong-cyan)]/20 text-xs text-[var(--dark-cyan)]">{index+1}</span>{item}</div>)}</div></section><section className="mt-7"><div className="mb-3 flex items-center gap-2"><Clapperboard className="text-[#e99a37]"/><h2 className="font-display text-2xl text-[var(--charcoal-blue)]">3 short-form videos</h2><Pill color="#fff0c8">Under 60 sec</Pill></div><div className="space-y-3">{videos.map(([title,body],index)=><article key={title} className="card flex gap-4 p-4"><span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--charcoal-blue)] text-sm font-black text-white">{index+1}</span><div><h3 className="font-bold">{title}</h3><p className="mt-1 text-sm text-[var(--muted)]">{body}</p></div></article>)}</div></section><div className="mt-7 grid gap-5 md:grid-cols-2"><section className="card p-5"><h2 className="flex items-center gap-2 font-display text-2xl"><Users className="text-[var(--dark-cyan)]"/>Also required</h2><ul className="mt-4 space-y-3">{requirements.map(item=><li key={item} className="flex gap-2 text-sm"><Check size={17} className="mt-0.5 shrink-0 text-[var(--dark-cyan)]"/>{item}</li>)}</ul></section><section className="card p-5"><h2 className="font-display text-2xl">Scoring</h2><div className="mt-4 flex flex-wrap gap-2">{scoring.map(item=><Pill key={item} color="#dff5f3">{item}</Pill>)}</div></section></div><section className="mt-6 rounded-[24px] bg-[#fff0c8] p-5"><div className="flex gap-3"><CalendarClock className="shrink-0 text-[#9a651f]"/><div><p className="font-black text-[#70450f]">Due by 12:00 PM PDT</p><p className="text-sm text-[#70450f]">Saturday, August 8, 2026</p><a href="mailto:youthleadership@stanford.edu" className="mt-3 inline-flex items-center gap-2 break-all text-sm font-extrabold text-[var(--charcoal-blue)] underline underline-offset-4"><Mail size={16}/>youthleadership@stanford.edu</a></div></div></section></div>}
+export default function Challenge() {
+  return (
+    <div className="mx-auto max-w-3xl">
+      <PageHeader eyebrow="YLC 2026 Team Challenge" title="Breaking the Algorithm" />
+      <section className="relative overflow-hidden rounded-[30px] bg-[var(--charcoal-blue)] p-6 text-white shadow-xl md:p-8">
+        <div className="absolute -right-10 -top-10 size-40 rounded-full bg-[#f0a34a]/20" />
+        <Sparkles className="text-[#f0a34a]" />
+        <p className="mt-7 text-lg font-bold leading-relaxed">
+          Your team will create a public health outreach plan that uses
+          short-form social media to increase hepatitis B testing, screening,
+          vaccination, and awareness.
+        </p>
+      </section>
+      <section className="card mt-5 p-5">
+        <h2 className="flex items-center gap-2 font-display text-2xl text-[var(--charcoal-blue)]">
+          <Target className="text-[var(--dark-cyan)]" />
+          Your prompt
+        </h2>
+        <p className="mt-3 leading-relaxed text-[var(--muted)]">
+          You are a social media influencer focused on AAPI health and culture.
+          Your goal is to connect with your audience, spread awareness about
+          hepatitis B screening and vaccination, and create a realistic outreach
+          plan that ALC could potentially put into action.
+        </p>
+      </section>
+      <section className="card mt-4 flex gap-4 p-5">
+        <Presentation className="shrink-0 text-[var(--dark-cyan)]" />
+        <div>
+          <h2 className="font-bold">Final presentation</h2>
+          <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
+            Each team will present an 8–10 minute slideshow to the ALC panel
+            during the closing ceremony on Day 4.
+          </p>
+        </div>
+      </section>
+      <section className="mt-7">
+        <h2 className="mb-3 font-display text-2xl text-[var(--charcoal-blue)]">
+          Required project sections
+        </h2>
+        <div className="grid grid-cols-2 gap-2">
+          {sections.map((item, index) => (
+            <div
+              key={item}
+              className="card flex items-center gap-2 p-3 text-sm font-bold"
+            >
+              <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[var(--strong-cyan)]/20 text-xs text-[var(--dark-cyan)]">
+                {index + 1}
+              </span>
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
+      <section className="mt-7">
+        <div className="mb-3 flex items-center gap-2">
+          <Clapperboard className="text-[#e99a37]" />
+          <h2 className="font-display text-2xl text-[var(--charcoal-blue)]">
+            3 short-form videos
+          </h2>
+          <Pill color="#fff0c8">Under 60 sec</Pill>
+        </div>
+        <div className="space-y-3">
+          {videos.map(([title, body], index) => (
+            <article key={title} className="card flex gap-4 p-4">
+              <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[var(--charcoal-blue)] text-sm font-black text-white">
+                {index + 1}
+              </span>
+              <div>
+                <h3 className="font-bold">{title}</h3>
+                <p className="mt-1 text-sm text-[var(--muted)]">{body}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+      <div className="mt-7 grid gap-5 md:grid-cols-2">
+        <section className="card p-5">
+          <h2 className="flex items-center gap-2 font-display text-2xl">
+            <Users className="text-[var(--dark-cyan)]" />
+            Also required
+          </h2>
+          <ul className="mt-4 space-y-3">
+            {requirements.map((item) => (
+              <li key={item} className="flex gap-2 text-sm">
+                <Check
+                  size={17}
+                  className="mt-0.5 shrink-0 text-[var(--dark-cyan)]"
+                />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+        <section className="card p-5">
+          <h2 className="font-display text-2xl">Scoring</h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {scoring.map((item) => (
+              <Pill key={item} color="#dff5f3">
+                {item}
+              </Pill>
+            ))}
+          </div>
+        </section>
+      </div>
+      <section className="mt-6 rounded-[24px] bg-[#fff0c8] p-5">
+        <div className="flex gap-3">
+          <CalendarClock className="shrink-0 text-[#9a651f]" />
+          <div>
+            <p className="font-black text-[#70450f]">Due by 12:00 PM PDT</p>
+            <p className="text-sm text-[#70450f]">Saturday, August 8, 2026</p>
+            <a
+              href="mailto:youthleadership@stanford.edu"
+              className="mt-3 inline-flex items-center gap-2 break-all text-sm font-extrabold text-[var(--charcoal-blue)] underline underline-offset-4"
+            >
+              <Mail size={16} />
+              youthleadership@stanford.edu
+            </a>
+          </div>
+        </div>
+        <DeadlineCountdown />
+      </section>
+    </div>
+  );
+}

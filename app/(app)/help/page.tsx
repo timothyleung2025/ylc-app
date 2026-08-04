@@ -1,12 +1,66 @@
-import { Camera, CircleHelp, Clock3, ExternalLink, Mic, MonitorUp, Phone, Video } from "lucide-react";
+import { ExternalLink, Phone, Video } from "lucide-react";
 import { PageHeader } from "@/components/ui";
+import { ScheduleTimezoneSetting } from "@/components/schedule-timezone-setting";
 
-const basics=[
- {icon:Video,title:"Conference is on Zoom",body:"Use the official meeting details shared by YLC organizers."},
- {icon:Clock3,title:"Pacific Daylight Time",body:"Every time shown in this guide is PDT."},
- {icon:Camera,title:"Camera ready",body:"Please join from a device with a working camera."},
- {icon:Mic,title:"Microphone ready",body:"Test your microphone before the first session."},
+const basics = [
+  {
+    icon: Video,
+    title: "Conference is on Zoom",
+    body: "Use the official meeting details shared by YLC organizers.",
+  },
 ];
-const contacts=[{name:"Maris Leong",phone:"(916) 751-8203",href:"tel:+19167518203"},{name:"Saisri Petluru",phone:"(650) 430-2815",href:"tel:+16504302815"}];
+const contacts = [
+  { name: "Maris Leong", phone: "(916) 751-8203", href: "tel:+19167518203" },
+  { name: "Saisri Petluru", phone: "(650) 430-2815", href: "tel:+16504302815" },
+];
 
-export default function Help(){return <div className="mx-auto max-w-3xl"><PageHeader eyebrow="We’ve got you" title="Help" action={<span className="grid size-12 place-items-center rounded-2xl bg-[var(--strong-cyan)]/20 text-[var(--dark-cyan)]"><CircleHelp/></span>}/><section className="rounded-[28px] bg-[var(--charcoal-blue)] p-6 text-white shadow-lg"><MonitorUp className="text-[#8fe0dc]"/><h2 className="mt-5 font-display text-3xl">Quick tech check</h2><p className="mt-2 text-sm text-white/70">Join a few minutes early, find a quiet spot, and keep this page handy if you need support.</p></section><div className="mt-5 grid gap-3 sm:grid-cols-2">{basics.map(({icon:Icon,title,body})=><article key={title} className="card flex gap-3 p-4"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#dff5f3] text-[var(--dark-cyan)]"><Icon size={19}/></span><div><h2 className="font-bold">{title}</h2><p className="mt-1 text-sm text-[var(--muted)]">{body}</p></div></article>)}</div><section className="mt-7"><p className="text-xs font-black uppercase tracking-[.16em] text-[var(--dark-cyan)]">Technical help</p><h2 className="mt-1 font-display text-3xl text-[var(--charcoal-blue)]">Call or text us</h2><div className="mt-3 grid gap-3 sm:grid-cols-2">{contacts.map(contact=><a key={contact.name} href={contact.href} className="card flex items-center gap-4 p-4 transition hover:-translate-y-1"><span className="grid size-11 place-items-center rounded-2xl bg-[#fff0c8] text-[#9a651f]"><Phone size={20}/></span><div className="flex-1"><p className="font-bold">{contact.name}</p><p className="text-sm text-[var(--muted)]">{contact.phone}</p></div><ExternalLink size={16} className="text-stone-400"/></a>)}</div></section><p className="mt-8 text-center text-xs font-bold text-[var(--muted)]">YLC 2026 · August 5–8 · Virtual via Zoom</p></div>}
+export default function SettingsPage() {
+  return (
+    <div className="mx-auto max-w-3xl">
+      <PageHeader eyebrow="Conference support" title="Settings" />
+      <div className="grid gap-3 sm:grid-cols-2">
+        <ScheduleTimezoneSetting />
+        {basics.map(({ icon: Icon, title, body }) => (
+          <article key={title} className="card flex gap-3 p-4">
+            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#dff5f3] text-[var(--dark-cyan)]">
+              <Icon size={19} />
+            </span>
+            <div>
+              <h2 className="font-bold">{title}</h2>
+              <p className="mt-1 text-sm text-[var(--muted)]">{body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <section className="mt-7">
+        <p className="text-xs font-black uppercase tracking-[.16em] text-[var(--dark-cyan)]">
+          Technical help
+        </p>
+        <h2 className="mt-1 font-display text-3xl text-[var(--charcoal-blue)]">
+          Call or text us
+        </h2>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {contacts.map((contact) => (
+            <a
+              key={contact.name}
+              href={contact.href}
+              className="card flex items-center gap-4 p-4 transition hover:-translate-y-1"
+            >
+              <span className="grid size-11 place-items-center rounded-2xl bg-[#fff0c8] text-[#9a651f]">
+                <Phone size={20} />
+              </span>
+              <div className="flex-1">
+                <p className="font-bold">{contact.name}</p>
+                <p className="text-sm text-[var(--muted)]">{contact.phone}</p>
+              </div>
+              <ExternalLink size={16} className="text-stone-400" />
+            </a>
+          ))}
+        </div>
+      </section>
+      <p className="mt-8 text-center text-xs font-bold text-[var(--muted)]">
+        YLC 2026 · August 5–8 · Virtual via Zoom
+      </p>
+    </div>
+  );
+}

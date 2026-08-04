@@ -12,8 +12,14 @@ const magison = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "YLC 2026 Pocket Guide",
+  title: "YLC 2026",
   description: "Your mobile guide to the 2026 Youth Leadership Conference.",
+  applicationName: "YLC 2026",
+  appleWebApp: {
+    capable: true,
+    title: "YLC 2026",
+    statusBarStyle: "default",
+  },
   icons: {
     icon: [{ url: "/icon.png", type: "image/png" }],
     shortcut: ["/icon.png"],
