@@ -59,6 +59,8 @@ button:active, a:active { scale:.97; }
 }
 .card { border:1px solid var(--line); background:rgba(255,255,255,.94); border-radius:22px; box-shadow:0 10px 30px rgba(41,73,86,.07); }
 .safe-bottom { padding-bottom:calc(6.5rem + env(safe-area-inset-bottom)); }
+.safe-top { padding-top:calc(1.5rem + env(safe-area-inset-top)); }
+.signout-safe { top:calc(1.25rem + env(safe-area-inset-top)); }
 .no-scrollbar::-webkit-scrollbar { display:none; }
 .no-scrollbar { scrollbar-width:none; }
 ::selection { background:rgba(96,201,197,.45); }
@@ -76,4 +78,8 @@ button:active, a:active { scale:.97; }
 @media (prefers-reduced-motion: reduce) {
   .page-enter :is(.card, article) { animation:none; }
 }
-@media (min-width: 768px) { .app-shell { max-width:1180px; margin:auto; } }
+@media (min-width: 768px) {
+  .app-shell { max-width:1180px; margin:auto; }
+  .safe-top { padding-top:2rem; }
+  .signout-safe { top:1.75rem; }
+}
