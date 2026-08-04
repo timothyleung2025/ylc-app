@@ -11,7 +11,15 @@ const magison = localFont({
   display: "swap",
 });
 
-export const metadata: Metadata = { title: "YLC Field Guide", description: "Your Youth Leadership Conference companion." };
+export const metadata: Metadata = {
+  title: "YLC 2026 Pocket Guide",
+  description: "Your mobile guide to the 2026 Youth Leadership Conference.",
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    shortcut: ["/icon.png"],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
+};
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#294956" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
