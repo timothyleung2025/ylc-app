@@ -13,20 +13,29 @@ const magison = localFont({
 
 export const metadata: Metadata = {
   title: "YLC 2026",
-  description: "Your mobile guide to the 2026 Youth Leadership Conference.",
+  description: "Youth Leadership Conference pocket guide",
   applicationName: "YLC 2026",
+  manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     title: "YLC 2026",
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
   },
   icons: {
-    icon: [{ url: "/icon.png", type: "image/png" }],
-    shortcut: ["/icon.png"],
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    shortcut: ["/favicon.ico"],
     apple: [{ url: "/apple-icon.png", type: "image/png" }],
   },
 };
-export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#294956" };
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#2f9f9a",
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="en"><body className={`${sans.variable} ${magison.variable}`}><ParticipantProvider>{children}</ParticipantProvider></body></html>;
