@@ -1,0 +1,4 @@
+import { Bell, Clock3, Heart, Info, Sparkles } from "lucide-react";
+import { Announcement } from "@/lib/types";
+const icons={info:Info,clock:Clock3,sparkles:Sparkles,heart:Heart};
+export function AnnouncementCard({item}:{item:Announcement}){const Icon=icons[item.icon];return <article className={`card flex gap-4 p-4 ${item.priority?"border-l-4 border-l-[var(--strong-cyan)]":""}`}><span className={`grid size-11 shrink-0 place-items-center rounded-xl ${item.priority?"bg-[var(--strong-cyan)]/25 text-[var(--charcoal-blue)]":"bg-[var(--charcoal-blue)]/6 text-[var(--dark-cyan)]"}`}><Icon size={20}/></span><div><div className="flex items-center gap-2"><h3 className="font-bold">{item.title}</h3>{item.priority&&<Bell size={13} className="text-[var(--dark-cyan)]"/>}</div><p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">{item.body}</p><p className="mt-2 text-[10px] font-bold uppercase tracking-wider text-[var(--muted)]">{item.time}</p></div></article>}

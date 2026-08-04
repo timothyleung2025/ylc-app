@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+:root {
+  --white-smoke: #f2f2f2;
+  --strong-cyan: #60c9c5;
+  --dark-cyan: #42918e;
+  --carbon-black: #252525;
+  --charcoal-blue: #294956;
+  /* Semantic aliases keep every screen on the same five-color system. */
+  --cream: var(--white-smoke);
+  --paper: #ffffff;
+  --forest: var(--charcoal-blue);
+  --green: var(--dark-cyan);
+  --red: var(--strong-cyan);
+  --gold: var(--strong-cyan);
+  --ink: var(--carbon-black);
+  --muted: #5c6b70;
+  --line: rgba(41, 73, 86, .13);
+}
+* { box-sizing: border-box; }
+html { background: var(--cream); }
+body { margin:0; color:var(--ink); background:var(--cream); font-family:var(--font-sans),sans-serif; }
+button, input, textarea, select { font:inherit; }
+button { cursor:pointer; }
+.font-display { font-family:var(--font-magison),var(--font-sans),sans-serif; font-weight:400!important; letter-spacing:.01em; }
+.paper-texture {
+  background-color:var(--cream);
+  background-image:
+    radial-gradient(circle at 6% 4%, rgba(96,201,197,.15), transparent 24rem),
+    linear-gradient(135deg, transparent 0 49.5%, rgba(41,73,86,.025) 49.5% 50.5%, transparent 50.5% 100%);
+  background-size:auto, 28px 28px;
+}
+.card { border:1px solid var(--line); background:rgba(255,255,255,.94); border-radius:22px; box-shadow:0 10px 30px rgba(41,73,86,.07); }
+.safe-bottom { padding-bottom:calc(6.5rem + env(safe-area-inset-bottom)); }
+.no-scrollbar::-webkit-scrollbar { display:none; }
+.no-scrollbar { scrollbar-width:none; }
+::selection { background:rgba(96,201,197,.45); }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(-2deg)} 50%{transform:translateY(-5px) rotate(1deg)} }
+.float { animation:float 4s ease-in-out infinite; }
+@media (min-width: 768px) { .app-shell { max-width:1180px; margin:auto; } }
