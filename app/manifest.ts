@@ -6,6 +6,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "YLC 2026",
     description: "Youth Leadership Conference pocket guide",
     start_url: "/",
+    id: "/",
     scope: "/",
     display: "standalone",
     background_color: "#f7fbfa",

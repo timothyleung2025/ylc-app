@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ParticipantProvider } from "@/components/participant-session";
+import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-sans" });
 const magison = localFont({
@@ -38,5 +39,5 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${sans.variable} ${magison.variable}`}><ParticipantProvider>{children}</ParticipantProvider></body></html>;
+  return <html lang="en"><body className={`${sans.variable} ${magison.variable}`}><ParticipantProvider><ServiceWorkerRegistration/>{children}</ParticipantProvider></body></html>;
 }

@@ -1,2 +1,3 @@
 import { AppShell } from "@/components/app-shell";
-export default function Layout({children}:{children:React.ReactNode}){return <AppShell>{children}</AppShell>}
+import { AnnouncementProvider } from "@/components/announcement-provider";
+export default function Layout({children}:{children:React.ReactNode}){return <AnnouncementProvider><AppShell>{children}</AppShell></AnnouncementProvider>}

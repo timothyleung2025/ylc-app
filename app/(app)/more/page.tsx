@@ -1,7 +1,63 @@
-"use client";
-import { BookOpen, ExternalLink, HeartHandshake, Info, LifeBuoy, MapPin, Megaphone, MessageSquare, Phone, ShieldAlert, Star } from "lucide-react";
-import { useState } from "react";
-import { AnnouncementCard } from "@/components/announcement-card";
-import { LinkRow, PageHeader, Pill, Sheet } from "@/components/ui";
-import { announcements, volunteers } from "@/lib/mock-data";
-export default function More(){const [sheet,setSheet]=useState<string|null>(null);return <><PageHeader eyebrow="Info & opportunities" title="More"/><section><h2 className="mb-3 flex items-center gap-2 font-display text-2xl font-bold"><Megaphone size={22} className="text-[var(--red)]"/>Announcements</h2><div className="space-y-3">{announcements.slice(0,3).map(a=><AnnouncementCard key={a.id} item={a}/>)}</div><button onClick={()=>setSheet("Announcements")} className="mt-3 w-full text-sm font-bold text-[var(--green)]">View all announcements</button></section><section className="mt-8"><div className="mb-3"><Pill color="#dcefe5">KEEP THE MOMENTUM</Pill><h2 className="mt-2 font-display text-2xl font-bold">What comes after YLC?</h2><p className="mt-1 text-sm text-[var(--muted)]">Keep learning, serving, and leading with the ALC community.</p></div><div className="no-scrollbar -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-3">{volunteers.map(v=><article key={v.title} className="card min-w-[82%] snap-center p-5 sm:min-w-80"><div className="mb-4 flex items-center justify-between"><span className="grid size-11 place-items-center rounded-xl bg-[#fff0c8] text-[#a5741a]"><HeartHandshake size={21}/></span><Pill>{v.tag}</Pill></div><h3 className="font-display text-xl font-bold">{v.title}</h3><p className="mt-2 text-sm text-[var(--muted)]">{v.description}</p><p className="mt-4 flex items-center gap-1 text-xs font-bold"><MapPin size={13}/>{v.date} · {v.location}</p><button className="mt-4 flex items-center gap-1 text-sm font-extrabold text-[var(--green)]">Learn more <ExternalLink size={14}/></button></article>)}</div></section><section className="card mt-8 px-5"><LinkRow icon={<BookOpen/>} title="Conference resources" subtitle="Slides, fact sheets & toolkits" onClick={()=>setSheet("Resources")}/><LinkRow icon={<MessageSquare/>} title="Share feedback" subtitle="Help make the next YLC even better" onClick={()=>setSheet("Feedback")}/><LinkRow icon={<Phone/>} title="Conference contacts" subtitle="Organizers and venue support" onClick={()=>setSheet("Contacts")}/><LinkRow icon={<ShieldAlert/>} title="Emergency information" subtitle="Safety contacts and procedures" onClick={()=>setSheet("Emergency information")}/><LinkRow icon={<Info/>} title="About the Asian Liver Center" subtitle="Our mission and impact" onClick={()=>setSheet("About ALC")}/></section><p className="mt-8 text-center text-xs font-bold text-[var(--muted)]">YLC Field Guide · Youth Leadership Conference 2026<br/>Asian Liver Center at Stanford University</p><Sheet open={!!sheet} onClose={()=>setSheet(null)} title={sheet||"More"}>{sheet==="Announcements"?<div className="space-y-3">{announcements.map(a=><AnnouncementCard key={a.id} item={a}/>)}</div>:sheet==="Feedback"?<div><p className="mb-5 text-[var(--muted)]">What made today meaningful? Your notes help shape future conferences.</p><textarea className="min-h-40 w-full rounded-2xl border border-green-900/15 bg-white p-4" placeholder="Share your thoughts…"/><button className="mt-3 w-full rounded-2xl bg-[var(--forest)] p-4 font-bold text-white">Send feedback</button></div>:<div className="py-4"><span className="grid size-12 place-items-center rounded-2xl bg-green-100"><Star className="text-green-700"/></span><p className="mt-4 leading-relaxed text-[var(--muted)]">{sheet==="Emergency information"?"For immediate danger, call 911. For conference support, visit the check-in desk or call the on-site coordinator at (650) 555-0128.":sheet==="About ALC"?"The Asian Liver Center at Stanford University works to reduce the impact of hepatitis and liver cancer through education, outreach, and youth leadership.":"Helpful conference information and links will live here. This prototype is ready to connect to managed content later."}</p></div>}</Sheet></>}
+import { ExternalLink, Phone } from "lucide-react";
+import { AnnouncementPushSettings } from "@/components/announcement-push-settings";
+import { ScheduleTimezoneSetting } from "@/components/schedule-timezone-setting";
+import { ZoomAccessCard } from "@/components/zoom-access-card";
+import { PageHeader } from "@/components/ui";
+
+const contacts = [
+  {
+    name: "Maris Leong",
+    phone: "(916) 751-8203",
+    href: "tel:+19167518203",
+  },
+  {
+    name: "Saisri Petluru",
+    phone: "(650) 430-2815",
+    href: "tel:+16504302815",
+  },
+];
+
+export default function SettingsPage() {
+  return (
+    <div className="mx-auto max-w-3xl">
+      <PageHeader eyebrow="Conference support" title="Settings" />
+
+      <div className="space-y-3">
+        <ScheduleTimezoneSetting />
+        <ZoomAccessCard />
+        <AnnouncementPushSettings />
+      </div>
+
+      <section className="mt-7">
+        <p className="text-xs font-black uppercase tracking-[.16em] text-[var(--dark-cyan)]">
+          Technical help
+        </p>
+        <h2 className="mt-1 font-display text-3xl text-[var(--charcoal-blue)]">
+          Call or text us
+        </h2>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          {contacts.map((contact) => (
+            <a
+              key={contact.name}
+              href={contact.href}
+              className="card flex items-center gap-4 p-4 transition hover:scale-[1.02]"
+            >
+              <span className="grid size-11 place-items-center rounded-2xl bg-[#fff0c8] text-[#9a651f]">
+                <Phone size={20} />
+              </span>
+              <div className="flex-1">
+                <p className="font-bold">{contact.name}</p>
+                <p className="text-sm text-[var(--muted)]">{contact.phone}</p>
+              </div>
+              <ExternalLink size={16} className="text-stone-400" />
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <p className="mt-8 text-center text-xs font-bold text-[var(--muted)]">
+        YLC 2026 · August 5–8 · Virtual via Zoom
+      </p>
+    </div>
+  );
+}

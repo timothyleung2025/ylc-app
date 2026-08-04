@@ -1,4 +1,4 @@
-import { Activity, Announcement, ConferenceDay, MemoryPost, ScheduleEvent, Team } from "./types";
+import { Activity, ConferenceDay, MemoryPost, ScheduleEvent, Team } from "./types";
 
 export const teams: Team[] = [
   {id:"ruby",name:"Team Ruby",color:"#b83b46",pale:"#f9e2e3",motto:"Lead with courage, glow with purpose.",points:420,members:["Noah","Sofia","Ethan","Leila","Ryan"],rank:1},
@@ -65,14 +65,6 @@ export const schedule: ScheduleEvent[] = [
 ];
 
 export const activities: Activity[] = [{id:"public-health-video",title:"Public Health Video Challenge",eyebrow:"Mission 01 · Team Challenge",purpose:"Create a short-form video that makes a liver-health message understandable and engaging for other teenagers.",why:"Clear, creative health communication can help young people make informed choices—and your voice can reach peers in a way institutions often cannot.",steps:["Choose one liver-health message.","Identify the audience.","Plan a 30–60 second video.","Film and edit the video.","Submit it before the deadline."],timeLimit:"2 hours 30 minutes",deliverables:["One 30–60 second vertical video","A short caption","Credits for everyone who contributed"],criteria:["Clarity","Creativity","Accuracy","Audience engagement","Team collaboration"],deadline:"Confirm with your facilitator",tips:["Lead with one clear idea","Use captions for accessibility","Film near a window for better light","End with a memorable action"],materials:["Phone or tablet","Storyboard sheet","Liver health fact sheet","Optional props"],prompt:"How might you explain one surprising liver-health fact to a friend in under a minute?"}];
-
-export const announcements: Announcement[] = [
- {id:"a1",title:"Conference begins Wednesday, August 5",body:"Join the opening Introduction on Zoom at 10:00 AM.",time:"12 min ago",priority:true,icon:"info"},
- {id:"a2",title:"Four-day agenda is available",body:"Review the complete schedule and plan each conference day.",time:"36 min ago",icon:"clock"},
- {id:"a3",title:"Team presentations are Saturday",body:"Team presentations begin at 12:30 PM on the final day.",time:"1 hr ago",icon:"sparkles"},
- {id:"a4",title:"World Hepatitis Day volunteers",body:"Keep the momentum going after YLC. Sign up to support our July awareness event.",time:"Yesterday",icon:"heart"},
- {id:"a5",title:"Help hang community banners",body:"Join the ALC team next Saturday for a creative volunteer morning in San Jose.",time:"Yesterday",icon:"heart"},
-];
 
 export const memories: MemoryPost[] = [
  {id:"m1",author:"Leila",initials:"LK",team:"Team Ruby",type:"Favorite moment",text:"Our team turned a pile of sticky notes into an idea we actually want to build. The energy was unreal ✨",time:"18 min",color:"#f6c8c7",likes:14,style:"polaroid",image:"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=800&q=80"},
