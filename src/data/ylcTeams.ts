@@ -19,27 +19,15 @@ export const YLC_TEAMS = [
         "role": "team0"
       },
       {
-        "name": "Curtis Le",
-        "email": "",
-        "accessCode": "curle0",
-        "role": "team0"
-      },
-      {
-        "name": "Miyu Ik",
-        "email": "",
-        "accessCode": "miyik",
-        "role": "team0"
-      },
-      {
-        "name": "Maris Leo",
+        "name": "Maris Leong",
         "email": "",
         "accessCode": "marle",
         "role": "team0"
       },
       {
-        "name": "Saisri Pet",
+        "name": "Saisri Petluru",
         "email": "",
-        "accessCode": "saipet",
+        "accessCode": "saipe",
         "role": "team0"
       }
     ]
@@ -187,6 +175,12 @@ export const YLC_TEAMS = [
         "email": "rjayakumarhisc49@gmail.com",
         "accessCode": "risja",
         "role": "participant"
+      },
+      {
+        "name": "Alison Oh",
+        "email": "hcps-ohaj@henricostudents.org",
+        "accessCode": "alioh",
+        "role": "participant"
       }
     ]
   },
@@ -270,14 +264,14 @@ export const YLC_TEAMS = [
     "id": 4,
     "name": "Team 4",
     "leaders": [
-      "Amy Nangja",
+      "Miyu Ikeda",
       "Justin Cheong"
     ],
     "members": [
       {
-        "name": "Amy Nangja",
+        "name": "Miyu Ikeda",
         "email": "",
-        "accessCode": "amyna",
+        "accessCode": "miyik",
         "role": "leader"
       },
       {

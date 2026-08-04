@@ -1,7 +1,8 @@
 "use client";
 import { Crown, UserRound } from "lucide-react";
 import { motion } from "framer-motion";
-import { PageHeader, Pill } from "@/components/ui";
+import { useState } from "react";
+import { PageHeader, Pill, Sheet } from "@/components/ui";
 import { useParticipant } from "@/components/participant-session";
 import { getTeamById } from "@/src/data/ylcTeams";
 
@@ -33,6 +34,7 @@ export default function Team() {
               <Person
                 key={person.accessCode}
                 name={person.name}
+                email={person.email}
                 isCurrent={person.accessCode === currentParticipant!.accessCode}
                 leader
               />
@@ -59,6 +61,7 @@ export default function Team() {
             >
               <Person
                 name={person.name}
+                email={person.email}
                 isCurrent={person.accessCode === currentParticipant!.accessCode}
               />
             </motion.div>
@@ -71,16 +74,22 @@ export default function Team() {
 
 function Person({
   name,
+  email,
   isCurrent,
   leader = false,
 }: {
   name: string;
+  email: string;
   isCurrent: boolean;
   leader?: boolean;
 }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div
-      className={`card flex h-full items-center gap-3 p-3 ${isCurrent ? "ring-2 ring-[var(--strong-cyan)]" : ""}`}
+    <>
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className={`card flex h-full w-full items-center gap-3 p-3 text-left ${isCurrent ? "ring-2 ring-[var(--strong-cyan)]" : ""}`}
     >
       <span
         className={`grid size-10 shrink-0 place-items-center rounded-full font-black ${leader ? "bg-[#fff0c8] text-[#9a651f]" : "bg-[#dff5f3] text-[var(--dark-cyan)]"}`}
@@ -93,8 +102,12 @@ function Person({
       </span>
       <div className="min-w-0">
         <p className="truncate text-sm font-bold">{name}</p>
-        {isCurrent && <Pill color="#dff5f3">You</Pill>}
+        {isCurrent ? <Pill color="#dff5f3">You</Pill> : <p className="mt-1 text-[10px] text-[var(--muted)]">Tap for email</p>}
       </div>
-    </div>
+    </button>
+    <Sheet open={open} onClose={() => setOpen(false)} title={name}>
+      <div className="py-4 text-center"><span className={`mx-auto grid size-14 place-items-center rounded-full text-lg font-black ${leader ? "bg-[#fff0c8] text-[#9a651f]" : "bg-[#dff5f3] text-[var(--dark-cyan)]"}`}>{name.split(" ").map(x=>x[0]).slice(0,2).join("")}</span><p className="mt-4 text-xs font-black uppercase tracking-wider text-[var(--muted)]">Email</p>{email ? <a href={`mailto:${email}`} className="mt-2 block break-all font-bold text-[var(--dark-cyan)] underline underline-offset-4">{email}</a> : <p className="mt-2 font-bold text-[var(--muted)]">Email not listed</p>}</div>
+    </Sheet>
+    </>
   );
 }

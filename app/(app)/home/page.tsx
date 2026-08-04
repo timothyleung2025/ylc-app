@@ -11,6 +11,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useParticipant } from "@/components/participant-session";
 import { getTeamById } from "@/src/data/ylcTeams";
+import { ZoomAccessCard } from "@/components/zoom-access-card";
 
 const actions = [
   {
@@ -114,6 +115,7 @@ export default function Home() {
           Where to?
         </h2>
         <div className="grid gap-3 sm:grid-cols-3">
+          <ZoomAccessCard whereTo />
           {actions.map(({ href, label, icon: Icon, color }, i) => (
             <motion.div
               key={href}
@@ -123,7 +125,7 @@ export default function Home() {
             >
               <Link
                 href={href}
-                className="card flex min-h-24 items-center gap-3 p-4 transition hover:-translate-y-1"
+                className="card flex min-h-24 items-center gap-3 p-4 transition"
               >
                 <span
                   className={`grid size-11 shrink-0 place-items-center rounded-2xl ${color}`}

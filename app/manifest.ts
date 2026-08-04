@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "YLC 2026",
-    short_name: "YLC",
+    short_name: "YLC 2026",
     description: "Youth Leadership Conference pocket guide",
     start_url: "/",
     scope: "/",

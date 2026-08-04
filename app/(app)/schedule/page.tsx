@@ -26,7 +26,7 @@ const colors: Record<Category, { badge: string; border: string; icon: string; ti
 
 const days: { date: string; short: string; label: string; events: SourceEvent[] }[] = [
   { date: "2026-08-05", short: "Wed, Aug 5", label: "Day 1", events: [
-    {time:"10:00 AM",title:"Introduction"},{time:"10:15 AM",title:"Meet Your Team"},{time:"11:00 AM",title:"Keynote: Camille Chu"},{time:"11:15 AM",title:"Keynote: Dr. Samuel So"},{time:"12:00 PM",title:"Lunch"},{time:"1:00 PM",title:"Keynote: Sa Nguyen"},{time:"2:00 PM",title:"Team Activity"},{time:"2:30 PM",title:"Break"},{time:"3:00 PM",title:"Team Challenge Introduction"},{time:"3:15 PM",title:"Working Session"},{time:"4:00 PM",title:"Keynote: Miyu & Timothy"},{time:"5:00 PM",title:"Closing"},
+    {time:"10:00 AM",title:"Introduction"},{time:"10:15 AM",title:"Meet Your Team"},{time:"11:00 AM",title:"Keynote: Camille Chu"},{time:"11:15 AM",title:"Keynote: Dr. Samuel So"},{time:"12:00 PM",title:"Lunch"},{time:"1:00 PM",title:"Keynote: Sa Nguyen"},{time:"2:00 PM",title:"Team Activity"},{time:"2:30 PM",title:"Break"},{time:"3:00 PM",title:"Team Challenge Introduction"},{time:"3:15 PM",title:"Working Session"},{time:"4:00 PM",title:"Keynote: Miyu Ikeda and Timothy Leung"},{time:"5:00 PM",title:"Closing"},
   ]},
   { date: "2026-08-06", short: "Thurs, Aug 6", label: "Day 2", events: [
     {time:"10:00 AM",title:"Introduction"},{time:"10:15 AM",title:"Team Activity"},{time:"11:00 AM",title:"Working Session"},{time:"12:30 PM",title:"Lunch"},{time:"1:30 PM",title:"Keynote: Judy Huynh"},{time:"2:30 PM",title:"Break"},{time:"3:00 PM",title:"Keynote: Austin Pliler"},{time:"4:00 PM",title:"Team HBV Presentation"},{time:"4:30 PM",title:"Working Session"},{time:"5:00 PM",title:"Closing"},

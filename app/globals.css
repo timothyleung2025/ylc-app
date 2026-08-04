@@ -46,9 +46,15 @@ button, input, textarea, select { font:inherit; }
 button { cursor:pointer; }
 button, a {
   -webkit-tap-highlight-color: transparent;
-  transition: scale 160ms ease, opacity 160ms ease;
+  transition: scale 280ms cubic-bezier(.22,1,.36,1), opacity 220ms ease;
 }
-button:active, a:active { scale:.97; }
+button:active, a:active {
+  scale:.97;
+  transition-duration:120ms;
+}
+@media (hover:hover) and (pointer:fine) {
+  button:hover, a:hover { scale:1.025; }
+}
 .font-display { font-family:var(--font-magison),var(--font-sans),sans-serif; font-weight:400!important; letter-spacing:.01em; }
 .paper-texture {
   background-color:var(--cream);

@@ -1,14 +1,8 @@
-import { ExternalLink, Phone, Video } from "lucide-react";
+import { ExternalLink, Phone } from "lucide-react";
 import { PageHeader } from "@/components/ui";
 import { ScheduleTimezoneSetting } from "@/components/schedule-timezone-setting";
+import { ZoomAccessCard } from "@/components/zoom-access-card";
 
-const basics = [
-  {
-    icon: Video,
-    title: "Conference is on Zoom",
-    body: "Use the official meeting details shared by YLC organizers.",
-  },
-];
 const contacts = [
   { name: "Maris Leong", phone: "(916) 751-8203", href: "tel:+19167518203" },
   { name: "Saisri Petluru", phone: "(650) 430-2815", href: "tel:+16504302815" },
@@ -20,17 +14,7 @@ export default function SettingsPage() {
       <PageHeader eyebrow="Conference support" title="Settings" />
       <div className="grid gap-3 sm:grid-cols-2">
         <ScheduleTimezoneSetting />
-        {basics.map(({ icon: Icon, title, body }) => (
-          <article key={title} className="card flex gap-3 p-4">
-            <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#dff5f3] text-[var(--dark-cyan)]">
-              <Icon size={19} />
-            </span>
-            <div>
-              <h2 className="font-bold">{title}</h2>
-              <p className="mt-1 text-sm text-[var(--muted)]">{body}</p>
-            </div>
-          </article>
-        ))}
+        <ZoomAccessCard />
       </div>
       <section className="mt-7">
         <p className="text-xs font-black uppercase tracking-[.16em] text-[var(--dark-cyan)]">

@@ -22,8 +22,8 @@ export function AccessCodeScreen() {
     router.replace("/home");
   }
 
-  return <main className="paper-texture relative grid min-h-dvh overflow-hidden md:grid-cols-2">
-    <section className="relative hidden overflow-hidden bg-[var(--forest)] p-14 text-white md:flex md:flex-col md:justify-between">
+  return <main className="paper-texture relative grid min-h-dvh overflow-hidden">
+    <section className="hidden">
       <div className="absolute -right-24 -top-20 size-96 rounded-full bg-[var(--strong-cyan)]/20 blur-2xl" />
       <p className="text-sm font-bold tracking-wide">ASIAN LIVER CENTER · STANFORD</p>
       <div className="relative">
@@ -36,7 +36,7 @@ export function AccessCodeScreen() {
 
     <section className="relative flex min-h-dvh items-center justify-center px-5 py-10">
       <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
-        <div className="mb-8 md:hidden"><h1 className="font-display text-6xl leading-none text-[var(--forest)]">YLC 2026</h1></div>
+        <div className="mb-8"><h1 className="font-display text-6xl leading-none text-[var(--forest)]">YLC 2026</h1></div>
         <p className="text-sm font-extrabold uppercase tracking-[.16em] text-[var(--dark-cyan)]">Welcome, leader!</p>
         <h2 className="mt-2 whitespace-nowrap font-display text-2xl text-[var(--forest)] sm:text-3xl">Enter your access code</h2>
         <p className="mt-3 text-[var(--muted)]">Use your personal code: the first 3 letters of your first name + the first 2 letters of your last name.</p>
