@@ -463,15 +463,15 @@ export const YLC_TEAMS = [
         "role": "participant"
       },
       {
-        "name": "Isabella Velasco",
-        "email": "izzy.velasco921@gmail.com",
-        "accessCode": "isave",
-        "role": "participant"
-      },
-      {
         "name": "Alison Oh",
         "email": "hcps-ohaj@henricostudents.org",
         "accessCode": "alioh",
+        "role": "participant"
+      },
+      {
+        "name": "Raksheetha Varshenee",
+        "email": "",
+        "accessCode": "rakva",
         "role": "participant"
       }
     ]

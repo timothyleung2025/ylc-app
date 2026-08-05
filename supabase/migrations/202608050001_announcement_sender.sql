@@ -11,3 +11,5 @@ alter table public.announcements
 alter table public.announcements
   add constraint announcements_sender_check
   check (char_length(sender) between 1 and 80);
+
+notify pgrst, 'reload schema';

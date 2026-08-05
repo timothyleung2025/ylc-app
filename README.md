@@ -4,7 +4,7 @@
 
 1. Copy `.env.example` to `.env.local` and replace every placeholder.
 2. Open Supabase → SQL Editor.
-3. Paste and run `supabase/migrations/202608040001_live_announcements.sql`.
+3. In the Supabase SQL Editor, paste and run the migrations in filename order from `supabase/migrations/`.
 4. Restart the Next.js development server after changing environment variables.
 
 The publishable key is safe for browser reads. `SUPABASE_SECRET_KEY` and `ADMIN_ACCESS_CODE` are server-only and must never be prefixed with `NEXT_PUBLIC_`.
