@@ -18,7 +18,8 @@ export async function sendAnnouncementPush(announcement: Announcement) {
   if(!supabase||!configure())return {configured:false,sent:0,failed:0};
   const {data}=await supabase.from("push_subscriptions").select("id,endpoint,p256dh,auth").eq("is_active",true);
   let sent=0,failed=0;
-  await Promise.all((data||[]).map(async(subscription:Subscription)=>{try{await deliver(subscription,{title:announcement.title,body:announcement.category==="link"?"Tap to open the shared link.":(announcement.message||"").slice(0,180),url:`/announcements?announcement=${announcement.id}`,id:announcement.id});sent++}catch(issue){failed++;const status=(issue as {statusCode?:number}).statusCode;if(status===404||status===410)await supabase.from("push_subscriptions").update({is_active:false,updated_at:new Date().toISOString()}).eq("id",subscription.id)}}));
+  const content=announcement.category==="link"?"Tap to open the shared link.":(announcement.message||"").slice(0,180);
+  await Promise.all((data||[]).map(async(subscription:Subscription)=>{try{await deliver(subscription,{title:announcement.title,body:`From: ${announcement.sender||"YLC"}\n${content}`,url:`/announcements?announcement=${announcement.id}`,id:announcement.id});sent++}catch(issue){failed++;const status=(issue as {statusCode?:number}).statusCode;if(status===404||status===410)await supabase.from("push_subscriptions").update({is_active:false,updated_at:new Date().toISOString()}).eq("id",subscription.id)}}));
   return {configured:true,sent,failed};
 }
 

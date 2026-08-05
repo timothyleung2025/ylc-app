@@ -5,6 +5,7 @@ export type Announcement = {
   title: string;
   message: string | null;
   link_url: string | null;
+  sender: string;
   category: AnnouncementCategory;
   is_pinned: boolean;
   created_at: string;
