@@ -175,12 +175,6 @@ export const YLC_TEAMS = [
         "email": "rjayakumarhisc49@gmail.com",
         "accessCode": "risja",
         "role": "participant"
-      },
-      {
-        "name": "Alison Oh",
-        "email": "hcps-ohaj@henricostudents.org",
-        "accessCode": "alioh",
-        "role": "participant"
       }
     ]
   },
@@ -475,9 +469,9 @@ export const YLC_TEAMS = [
         "role": "participant"
       },
       {
-        "name": "Victoria Yoo",
-        "email": "victoriayoo121010@gmail.com",
-        "accessCode": "vicyo",
+        "name": "Alison Oh",
+        "email": "hcps-ohaj@henricostudents.org",
+        "accessCode": "alioh",
         "role": "participant"
       }
     ]
