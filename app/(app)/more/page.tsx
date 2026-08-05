@@ -1,6 +1,6 @@
 import { ExternalLink, Phone } from "lucide-react";
-import { AnnouncementPushSettings } from "@/components/announcement-push-settings";
 import { ScheduleTimezoneSetting } from "@/components/schedule-timezone-setting";
+import { PushNotificationSettings } from "@/components/push-notification-settings";
 import { ZoomAccessCard } from "@/components/zoom-access-card";
 import { PageHeader } from "@/components/ui";
 
@@ -25,7 +25,7 @@ export default function SettingsPage() {
       <div className="space-y-3">
         <ScheduleTimezoneSetting />
         <ZoomAccessCard />
-        <AnnouncementPushSettings />
+        <PushNotificationSettings />
       </div>
 
       <section className="mt-7">

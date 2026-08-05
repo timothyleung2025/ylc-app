@@ -1,57 +1,36 @@
 # YLC 2026 Field Guide
 
-## Live announcements
+## Supabase announcements setup
 
-Announcements use one service (`lib/announcement-service.ts`). When Supabase environment variables are configured, it uses Postgres, RLS, and Realtime. Without them, **development only** uses localStorage plus BroadcastChannel; fallback records are visibly labeled `TEST` and cannot send push notifications.
+1. Copy `.env.example` to `.env.local` and replace every placeholder.
+2. Open Supabase → SQL Editor.
+3. Paste and run `supabase/migrations/202608040001_live_announcements.sql`.
+4. Restart the Next.js development server after changing environment variables.
 
-### Configure Supabase
+The publishable key is safe for browser reads. `SUPABASE_SECRET_KEY` and `ADMIN_ACCESS_CODE` are server-only and must never be prefixed with `NEXT_PUBLIC_`.
 
-1. Create a Supabase project and copy `.env.example` to `.env.local`.
-2. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-3. Apply `supabase/migrations/202608040001_live_announcements.sql` with `supabase db push` or the SQL editor.
-4. Replace access-code-only sessions with Supabase Auth before production. Create `participant_profiles(user_id uuid primary key, team_id uuid, role text)` and assign trusted `app_metadata.team_id` and `app_metadata.role` server-side. Team RLS intentionally depends on those trusted claims.
+### Realtime
 
-### Create the first admin
+The migration adds `public.announcements` to the `supabase_realtime` publication. You can also confirm it in Supabase → Database → Publications → `supabase_realtime` and enable the `announcements` table there.
 
-Create the user through Supabase Auth, then set app metadata with a trusted server/service-role script:
+### Test live updates
 
-```ts
-await supabase.auth.admin.updateUserById(userId, {
-  app_metadata: { role: "admin" },
-});
-```
+1. Run `npm run dev`.
+2. Open `/admin` in one window and sign in with `ADMIN_ACCESS_CODE`.
+3. Open `/announcements` in another window and enter the normal participant access code if prompted.
+4. Publish, pin, unpin, or delete from `/admin`.
+5. The participant feed should update immediately. A newly published announcement also shows an in-app toast.
 
-Never perform this from browser code. Sign in as that user before opening `/admin/announcements` in production.
+Announcement publishing works independently of push delivery and remains successful when push is not configured.
 
-### Push configuration and Edge Function
+## Phone notifications
 
-Generate VAPID keys and set the browser-safe public key as `NEXT_PUBLIC_VAPID_PUBLIC_KEY`. Set these Edge Function secrets:
+Generate VAPID keys once with `npx web-push generate-vapid-keys`. Put the public key in `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, the private key in `VAPID_PRIVATE_KEY`, and a `mailto:` contact in `VAPID_SUBJECT`. Add the same variables in Vercel and redeploy.
 
-```bash
-supabase secrets set \
-  VAPID_PUBLIC_KEY=... \
-  VAPID_PRIVATE_KEY=... \
-  VAPID_SUBJECT=mailto:youthleadership@stanford.edu \
-  SUPABASE_URL=... \
-  SUPABASE_SECRET_KEY=...
-supabase functions deploy send-announcement-push
-```
+Participants enable notifications explicitly in Settings. On iPhone/iPad, YLC 2026 must first be added to the Home Screen and opened from its icon. Android and desktop browsers can enable notifications from the installed PWA or supported browser.
 
-`SUPABASE_SECRET_KEY` and `VAPID_PRIVATE_KEY` must never use a `NEXT_PUBLIC_` name. The function verifies the caller is an authenticated admin, applies audience/preferences, claims a unique delivery key, sends Web Push, logs results, and disables expired subscriptions.
+The `push_subscriptions` table has RLS enabled and no public policies. Subscription writes and push delivery go through server routes using `SUPABASE_SECRET_KEY`. Expired subscriptions are removed automatically. Announcement publishing still succeeds when push is unconfigured or an individual delivery fails.
 
-### Realtime testing
+## Admin access behavior
 
-1. Run two browser windows with the same development origin.
-2. Open `/announcements` in one and `/admin/announcements` in the other.
-3. Publish a fallback announcement; it should appear live with a toast and unread badge.
-4. With Supabase configured, repeat while authenticated and confirm the `announcements` table is enabled in the `supabase_realtime` publication.
-5. Test everyone/team/organizers audiences with separate authenticated users and trusted team/role claims.
-
-### Push testing
-
-1. Install/open the PWA, go to More, and explicitly enable announcement notifications.
-2. Confirm a real row exists in `notification_subscriptions`.
-3. Publish from `/admin/announcements` with **Send push** enabled. Use a test-only audience/device before broad delivery.
-4. Confirm delivery rows and tap the notification; it must open `/announcements/[announcementId]`.
-
-Push is not operational until Supabase Auth, the migration, VAPID keys, a saved subscription, and the deployed Edge Function are all present. The local test button verifies only service-worker display/click behavior, not server delivery.
+The admin code is verified only by the server. The returned authorization token is kept only in page memory—not localStorage, sessionStorage, or a cookie—so every refresh or revisit to `/admin` requires the code again.
