@@ -27,9 +27,13 @@ Announcement publishing works independently of push delivery and remains success
 
 Generate VAPID keys once with `npx web-push generate-vapid-keys`. Put the public key in `NEXT_PUBLIC_VAPID_PUBLIC_KEY`, the private key in `VAPID_PRIVATE_KEY`, and a `mailto:` contact in `VAPID_SUBJECT`. Add the same variables in Vercel and redeploy.
 
-Participants enable notifications explicitly in Settings. On iPhone/iPad, YLC 2026 must first be added to the Home Screen and opened from its icon. Android and desktop browsers can enable notifications from the installed PWA or supported browser.
+Participants enable notifications explicitly from Announcements, Settings, or the reminder shown after a new sign-in. Permission is never requested automatically. They can turn notifications off again, and the test button sends only to the requesting device.
+
+On iPhone/iPad, YLC 2026 must first be added to the Home Screen and opened from its icon. In Safari, use Share → Add to Home Screen. Android and desktop browsers can enable notifications directly in a supported browser or installed PWA.
 
 The `push_subscriptions` table has RLS enabled and no public policies. Subscription writes and push delivery go through server routes using `SUPABASE_SECRET_KEY`. Expired subscriptions are removed automatically. Announcement publishing still succeeds when push is unconfigured or an individual delivery fails.
+
+To test, enable notifications on one device, use its test button, then publish a new admin announcement with **Send phone notification** enabled. Editing, pinning, and deleting never send notifications.
 
 ## Admin access behavior
 

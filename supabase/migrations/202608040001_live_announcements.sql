@@ -3,11 +3,29 @@ create extension if not exists pgcrypto;
 create table if not exists public.announcements (
   id uuid primary key default gen_random_uuid(),
   title text not null check (char_length(title) between 1 and 160),
-  message text not null check (char_length(message) between 1 and 5000),
+  message text not null default '',
+  link_url text,
   category text not null default 'general'
-    check (category in ('general', 'reminder', 'schedule_update', 'urgent')),
+    check (category in ('general', 'urgent', 'link')),
   is_pinned boolean not null default false,
   created_at timestamptz not null default now()
+);
+
+-- Safely upgrade announcements created with the earlier category set.
+alter table public.announcements add column if not exists link_url text;
+alter table public.announcements alter column message drop not null;
+alter table public.announcements alter column message set default '';
+update public.announcements set category = 'general'
+  where category not in ('general', 'urgent', 'link');
+alter table public.announcements drop constraint if exists announcements_category_check;
+alter table public.announcements drop constraint if exists announcements_message_check;
+alter table public.announcements drop constraint if exists announcements_content_check;
+alter table public.announcements add constraint announcements_category_check
+  check (category in ('general', 'urgent', 'link'));
+alter table public.announcements add constraint announcements_content_check check (
+  (category = 'link' and link_url is not null and char_length(link_url) > 0)
+  or
+  (category in ('general', 'urgent') and char_length(message) between 1 and 5000)
 );
 
 create index if not exists announcements_feed_order_idx
@@ -18,8 +36,15 @@ create table if not exists public.push_subscriptions (
   endpoint text not null unique,
   p256dh text not null,
   auth text not null,
-  created_at timestamptz not null default now()
+  user_agent text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  is_active boolean not null default true
 );
+
+alter table public.push_subscriptions add column if not exists user_agent text;
+alter table public.push_subscriptions add column if not exists updated_at timestamptz not null default now();
+alter table public.push_subscriptions add column if not exists is_active boolean not null default true;
 
 alter table public.announcements enable row level security;
 alter table public.push_subscriptions enable row level security;

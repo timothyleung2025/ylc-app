@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { AccessCodeScreen } from "./access-code-screen";
 import { BottomNav } from "./bottom-nav";
 import { useParticipant } from "./participant-session";
+import { PostSigninNotificationPrompt } from "./post-signin-notification-prompt";
 export function AppShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -27,6 +28,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div key={pathname} className="page-enter">{children}</div>
       </main>
       <BottomNav />
+      <PostSigninNotificationPrompt />
     </div>
   );
 }

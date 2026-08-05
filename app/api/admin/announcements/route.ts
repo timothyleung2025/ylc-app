@@ -4,7 +4,13 @@ import { getSupabaseAdminClient, missingSupabaseServerVariables } from "@/lib/su
 import type { AnnouncementCategory } from "@/lib/announcement-types";
 import { sendAnnouncementPush } from "@/lib/push-notifications";
 
-const categories: AnnouncementCategory[] = ["general", "reminder", "schedule_update", "urgent"];
+const categories: AnnouncementCategory[] = ["general", "urgent", "link"];
+
+function validLink(value: unknown) {
+  if (typeof value !== "string") return false;
+  try { return ["http:", "https:"].includes(new URL(value).protocol); }
+  catch { return false; }
+}
 
 function context(request: Request) {
   if (!requestHasAdminToken(request)) return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
@@ -35,10 +41,16 @@ export async function POST(request: Request) {
   const ctx = context(request);
   if (ctx.error) return ctx.error;
   const body = await request.json();
-  if (!body.title?.trim() || !body.message?.trim() || !categories.includes(body.category)) return NextResponse.json({ error: "Complete all announcement fields." }, { status: 400 });
-  const { data, error } = await ctx.supabase!.from("announcements").insert({ title: body.title.trim(), message: body.message.trim(), category: body.category, is_pinned: Boolean(body.is_pinned) }).select().single();
-  if (!error && data) await sendAnnouncementPush(data);
-  return error ? NextResponse.json({ error: error.message }, { status: 500 }) : NextResponse.json(data, { status: 201 });
+  const isLink = body.category === "link";
+  if (!body.title?.trim() || !categories.includes(body.category) || (isLink ? !validLink(body.link_url) : !body.message?.trim())) return NextResponse.json({ error: isLink ? "Enter a subject and a valid http or https link." : "Complete all announcement fields." }, { status: 400 });
+  const { data, error } = await ctx.supabase!.from("announcements").insert({ title: body.title.trim(), message: isLink ? "" : body.message.trim(), link_url: isLink ? body.link_url.trim() : null, category: body.category, is_pinned: Boolean(body.is_pinned) }).select().single();
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  let notification = { requested: Boolean(body.send_notification), configured: true, sent: 0, failed: 0 };
+  if (body.send_notification) {
+    try { notification = { requested: true, ...(await sendAnnouncementPush(data)) }; }
+    catch { notification = { requested: true, configured: true, sent: 0, failed: 1 }; }
+  }
+  return NextResponse.json({ announcement: data, notification }, { status: 201 });
 }
 
 export async function PATCH(request: Request) {
@@ -46,11 +58,13 @@ export async function PATCH(request: Request) {
   if (ctx.error) return ctx.error;
   const body = await request.json();
   if (!body.id || typeof body.is_pinned !== "boolean") return NextResponse.json({ error: "Invalid request." }, { status: 400 });
-  const update: { title?: string; message?: string; category?: AnnouncementCategory; is_pinned: boolean } = { is_pinned: body.is_pinned };
+  const update: { title?: string; message?: string; link_url?: string | null; category?: AnnouncementCategory; is_pinned: boolean } = { is_pinned: body.is_pinned };
   if (body.title !== undefined || body.message !== undefined || body.category !== undefined) {
-    if (!body.title?.trim() || !body.message?.trim() || !categories.includes(body.category)) return NextResponse.json({ error: "Complete all announcement fields." }, { status: 400 });
+    const isLink = body.category === "link";
+    if (!body.title?.trim() || !categories.includes(body.category) || (isLink ? !validLink(body.link_url) : !body.message?.trim())) return NextResponse.json({ error: isLink ? "Enter a subject and a valid http or https link." : "Complete all announcement fields." }, { status: 400 });
     update.title = body.title.trim();
-    update.message = body.message.trim();
+    update.message = isLink ? "" : body.message.trim();
+    update.link_url = isLink ? body.link_url.trim() : null;
     update.category = body.category;
   }
   const { data, error } = await ctx.supabase!.from("announcements").update(update).eq("id", body.id).select().single();
