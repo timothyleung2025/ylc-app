@@ -46,7 +46,7 @@ export default function AnnouncementsPage() {
       {unreadCount > 0 && <button onClick={markAllRead} className="mb-4 flex items-center gap-2 text-xs font-extrabold text-[var(--dark-cyan)]"><CheckCheck size={15}/>Mark all as read</button>}
       {loading ? <div className="space-y-3">{[1,2,3].map(i=><div key={i} className="card h-40 animate-pulse bg-white/60"/>)}</div>
         : error ? <div className="card p-6 text-center"><p className="font-bold text-[#965555]">Couldn’t load announcements</p><p className="mt-1 text-sm text-[var(--muted)]">{error}</p><p className="mt-3 text-xs font-bold text-[var(--dark-cyan)]">Pull down to try again.</p></div>
-        : announcements.length ? <div className="space-y-3">{announcements.map(item=><LiveAnnouncementCard key={item.id} item={item} read={isRead(item.id)} onClick={()=>open(item)}/>)}</div>
+        : announcements.length ? <div className="space-y-3">{announcements.map(item=><LiveAnnouncementCard key={item.id} item={item} read={isRead(item.id)} onClick={()=>open(item)} onLinkClick={()=>markRead(item.id)}/>)}</div>
         : <EmptyState title="Nothing here yet" body="New conference updates will appear here."/>}
       <p className="mt-8 flex items-center justify-center gap-2 text-center text-xs text-[var(--muted)]"><Bell size={13}/>Pull down to refresh · live updates appear automatically.</p>
     </div>
