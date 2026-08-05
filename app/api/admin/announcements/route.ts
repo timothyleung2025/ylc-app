@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requestHasAdminToken } from "@/lib/admin-auth";
-import { getSupabaseAdminClient } from "@/lib/supabase/admin";
+import { getSupabaseAdminClient, missingSupabaseServerVariables } from "@/lib/supabase/admin";
 import type { AnnouncementCategory } from "@/lib/announcement-types";
 import { sendAnnouncementPush } from "@/lib/push-notifications";
 
@@ -9,7 +9,18 @@ const categories: AnnouncementCategory[] = ["general", "reminder", "schedule_upd
 function context(request: Request) {
   if (!requestHasAdminToken(request)) return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
   const supabase = getSupabaseAdminClient();
-  if (!supabase) return { error: NextResponse.json({ error: "Supabase server credentials are missing." }, { status: 503 }) };
+  if (!supabase) {
+    const missing = missingSupabaseServerVariables();
+    return {
+      error: NextResponse.json(
+        {
+          error: "Supabase server configuration is incomplete.",
+          missing,
+        },
+        { status: 503 },
+      ),
+    };
+  }
   return { supabase };
 }
 
