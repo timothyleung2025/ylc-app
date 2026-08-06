@@ -321,6 +321,12 @@ export const YLC_TEAMS = [
         "email": "munkyu0523@gmail.com",
         "accessCode": "munse",
         "role": "participant"
+      },
+      {
+        "name": "Aubrianna Ku",
+        "email": "",
+        "accessCode": "aubku",
+        "role": "participant"
       }
     ]
   },
